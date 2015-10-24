@@ -60,7 +60,7 @@ public class CoordinateTest {
 	}
 	
 	@Test
-	public void testdistanceFunction(){
+	public void testGetDistanceFunction(){
 			
 		//TODO
 		
