@@ -4,10 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -15,20 +12,20 @@ import static org.junit.Assert.assertTrue;
  */
 public class CoordinateTest {
 
-	/*class attributes*/
+	
 	private Coordinate coordinateDefault;
 	private Coordinate coordinate1;
 	private Coordinate coordinate2;
 	
 	private final static double MAXDELTA = 0.0001;
 	
-	private double long1 = 100.0;  /*längengrad -180-180*/ 
-	private double lat1  = -80.2;  /*breitengrad -90-90*/
+	private double long1 = 100.0;  /*laengengrad*/ 
+	private double lat1  = -80.2;  /*breitengrad*/
 	
-	private double long2 = -150.4;  /*längengrad -180-180*/ 
-	private double lat2  = 60.3;    /*breitengrad -90-90*/
+	private double long2 = -150.4;  /*laengengrad*/ 
+	private double lat2  = 60.3;    /*breitengrad*/
 	
-	/*init*/
+	
 	@Before
 	public void initCoordinates(){
 		coordinateDefault = new Coordinate();
@@ -36,12 +33,12 @@ public class CoordinateTest {
 		coordinate2 = new Coordinate(lat2, long2);
 	}
 	
-	/*tests*/
+	/* test methods, calculations */
 	@Test
 	public void testConstructor(){
 		assertNotNull(coordinateDefault);
 
-		// Check properties after creation with default constructor
+		//check properties after creation with default constructor
 		assertEquals(0, coordinateDefault.getLatitude(), MAXDELTA);
 		assertEquals(0, coordinateDefault.getLongitude(), MAXDELTA);
 		
@@ -54,16 +51,31 @@ public class CoordinateTest {
 	@Test
 	public void testLongLatDistanceFunctions(){
 		
-		assertEquals((lat1 - lat2), coordinate1.getLatitudialDistance(coordinate2), MAXDELTA);
-		assertEquals((long1 - long2), coordinate1.getLongitudialDistance(coordinate2), MAXDELTA);		
+		assertEquals(Math.abs(lat1 - lat2), coordinate1.getLatitudialDistance(coordinate2), MAXDELTA);
+		assertEquals(Math.abs(long1 - long2), coordinate1.getLongitudialDistance(coordinate2), MAXDELTA);		
 		
 	}
 	
 	@Test
 	public void testGetDistanceFunction(){
-			
-		//TODO
 		
+		Coordinate newCoord1 = coordinate1.getDistance(coordinate2);
+		Coordinate newCoord2 = coordinate2.getDistance(coordinate1);
+		
+		assertEquals(newCoord1.getLatitude(), newCoord2.getLatitude(), MAXDELTA);		
+		assertEquals(newCoord1.getLongitude(), newCoord2.getLongitude(), MAXDELTA);	
+		
+		assertEquals( Math.abs(lat1 - lat2), newCoord1.getLatitude(), MAXDELTA);
+		assertEquals( Math.abs(long1 - long2), newCoord1.getLongitude(), MAXDELTA);		
+		
+	}
+	
+	/* test null pointer */
+	@Test (expected = IllegalArgumentException.class)
+	public void nullArgumentShouldThrowExeption1(){
+		Coordinate testNull = null;
+		coordinateDefault.getLatitudialDistance(testNull);	
+		coordinateDefault.getLongitudialDistance(testNull);	
 	}
 	
 	
