@@ -103,6 +103,11 @@ public class Photo extends DataObject {
 	/**
 	 *
 	 */
+	protected Coordinate location;
+	
+	/**
+	 *
+	 */
 	protected PhotoStatus status = PhotoStatus.VISIBLE;
 	
 	/**
@@ -387,7 +392,21 @@ public class Photo extends DataObject {
 		tags = newTags;
 		incWriteCount();
 	}
-
+	
+	/**
+	 * @methodtype get
+	 */
+	public Coordinate getLocation(){
+		return location;
+	}
+	
+	/**
+	 * @methodtype set
+	 */
+	public void setLocation(double latitude, double longitude){
+		location = new Coordinate(latitude, longitude);
+	}
+	
 	/**
 	 * @methodtype get
 	 */
