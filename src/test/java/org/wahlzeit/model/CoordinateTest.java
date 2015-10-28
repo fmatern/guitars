@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -19,12 +21,12 @@ public class CoordinateTest {
 	
 	private final static double MAXDELTA = 0.0001;
 	
-	private double long1 = 100.0;  /*laengengrad*/ 
 	private double lat1  = -80.2;  /*breitengrad*/
-	
-	private double long2 = -150.4;  /*laengengrad*/ 
+	private double long1 = 100.0;  /*laengengrad*/ 
+
 	private double lat2  = 60.3;    /*breitengrad*/
-	
+	private double long2 = -150.4;  /*laengengrad*/ 
+
 	
 	@Before
 	public void initCoordinates(){
@@ -59,15 +61,28 @@ public class CoordinateTest {
 	@Test
 	public void testGetDistanceFunction(){
 		
-		Coordinate newCoord1 = coordinate1.getDistance(coordinate2);
-		Coordinate newCoord2 = coordinate2.getDistance(coordinate1);
+		double distance1 = coordinate1.getDistance(coordinate2);
+		double distance2 = coordinate2.getDistance(coordinate1);
 		
-		assertEquals(newCoord1.getLatitude(), newCoord2.getLatitude(), MAXDELTA);		
-		assertEquals(newCoord1.getLongitude(), newCoord2.getLongitude(), MAXDELTA);	
+		assertEquals(distance1, distance2, MAXDELTA);			
+		assertEquals( 16919.28935 , distance1, MAXDELTA);
 		
-		assertEquals( Math.abs(lat1 - lat2), newCoord1.getLatitude(), MAXDELTA);
-		assertEquals( Math.abs(long1 - long2), newCoord1.getLongitude(), MAXDELTA);		
+		Coordinate testCoord = new Coordinate(-55.56, 175.15);
+		distance2 = testCoord.getDistance(coordinate2);
 		
+		assertEquals( 13235.88297, distance2, MAXDELTA );
+
+	}
+
+	@Test
+	public void testEqualsFunction(){
+		
+		Coordinate equalCoord = new Coordinate(lat1, long1);
+		
+		assertFalse(coordinate1.equals(coordinate2));			
+		assertTrue( equalCoord.equals(coordinate1));
+
+
 	}
 	
 	/* test null pointer */
@@ -77,7 +92,6 @@ public class CoordinateTest {
 		coordinateDefault.getLatitudialDistance(testNull);	
 		coordinateDefault.getLongitudialDistance(testNull);	
 	}
-	
 	
 	/* test value range */
 	@Test (expected = IllegalArgumentException.class)
@@ -100,6 +114,5 @@ public class CoordinateTest {
 		coordinateDefault.setLongitude(200.0);		
 	}
 	
-
 }
 

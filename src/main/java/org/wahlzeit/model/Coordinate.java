@@ -8,86 +8,155 @@ public class Coordinate {
 	
 	private double latitude;
 	private double longitude;
+	private final static double EARTHRADIUS = 6371; /*Earth radius in km*/
 
+	/**
+	 * @methodtype constructor
+	 */
 	public Coordinate(double latitude, double longitude) {
-		
-		//Do allow out of range for easy "distance" calculation
-		
-		/* 
-		if( latitude > 90.0 || latitude < -90.0){
-	        throw new IllegalArgumentException("Latitude must be between -90 and 90");
-		}
-		if( longitude > 180.0 || longitude < -180.0){
-	        throw new IllegalArgumentException("Longitude must be between -180 and 180");
-		}
-		*/
+					
+		assertLatitudeRange(latitude);
+		assertLongitudeRange(longitude);
 		
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
 
+	/**
+	 * @methodtype constructor
+	 */
 	public Coordinate() {
 		this.latitude = 0.0;
 		this.longitude = 0.0;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getLatitude() {
 		return latitude;
 	}
 
+	/**
+	 * @methodtype get
+	 */
 	public double getLongitude() {
 		return longitude;
 	}
 
+	/**
+	 * @methodtype set
+	 */
 	public void setLatitude(double d) {
-		
-		if( d > 90.0 || d < -90.0){
-		        throw new IllegalArgumentException("Latitude must be between -90 and 90");
-		}
-		
+		assertLatitudeRange(d);
 		this.latitude = d;	
-		
 	}
 
-	public void setLongitude(double d) {
-		
-		if( d > 180.0 || d < -180.0){
-	        throw new IllegalArgumentException("Longitude must be between -180 and 180");
-		}
-		
+	/**
+	 * @methodtype set
+	 */
+	public void setLongitude(double d) { 
+		assertLongitudeRange(d);
 		this.longitude = d;	
 		
 	}
 
-	/* returns difference in latitude */
+	/** 
+	 * returns difference in latitude 
+	 */
 	public double getLatitudialDistance(Coordinate coord) {
-		
-		if( coord == null ){
-	        throw new IllegalArgumentException("Argument was null");
-		}
-		
+		assertArgumentNotNull(coord);
 		return Math.abs( this.latitude - coord.getLatitude() );
-		
 	}
 
-	/* returns difference in longitude */
+	/**
+	 *  returns difference in longitude 
+	 */
 	public double getLongitudialDistance(Coordinate coord) {
+		assertArgumentNotNull(coord);
+		return Math.abs( this.longitude - coord.getLongitude() );		
+	}
+
+	/**
+	 *  returns distance between two coordinates in kilometer
+	 *  using Haversine formula  https://en.wikipedia.org/wiki/Haversine_formula
+	 */
+	public double getDistance(Coordinate coord){
 		
+	    double latDiffRadian = Math.toRadians(getLatitudialDistance(coord));
+	    double lonDiffRadian = Math.toRadians(getLongitudialDistance(coord));
+
+	    double h = Math.pow(Math.sin(latDiffRadian / 2), 2)+ Math.cos(Math.toRadians(latitude)) * Math.cos(Math.toRadians(coord.getLatitude())) * Math.pow(Math.sin(lonDiffRadian / 2), 2);
+	    double d = 2 * EARTHRADIUS * Math.asin(Math.sqrt(h));
+
+	    return Math.abs(d);
+		
+	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	private void assertLatitudeRange(double d) throws IllegalArgumentException {
+		if( d > 90.0 || d < -90.0){
+	        throw new IllegalArgumentException("Latitude must be between -90 and 90");
+		}
+	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	private void assertLongitudeRange(double d) throws IllegalArgumentException {
+		if( d > 180.0 || d < -180.0){
+	        throw new IllegalArgumentException("Longitude must be between -180 and 180");
+		}
+	}
+	
+	/**
+	 * @methodtype assertion
+	 */
+	private void assertArgumentNotNull(Coordinate coord) throws IllegalArgumentException {
 		if( coord == null ){
 	        throw new IllegalArgumentException("Argument was null");
 		}
-		
-		return Math.abs( this.longitude - coord.getLongitude() );
-		
 	}
 
-	/* returns difference in latitude and longitude as new Coordiante object*/
-	public Coordinate getDistance(Coordinate coord){
-		
-		Coordinate returnCoord = new Coordinate(this.getLatitudialDistance(coord), this.getLongitudialDistance(coord));
-		
-		return returnCoord;
+	/**
+	 * @methodtype comparison
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
 	}
-	
-	
+
+	/**
+	 * @methodtype boolean query method
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Coordinate other = (Coordinate) obj;
+		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude)) {
+			return false;
+		}
+		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude)) {
+			return false;
+		}
+		return true;
+	}
+
 }
