@@ -12,15 +12,23 @@ public class GuitarPhoto extends Photo {
 	private String guitarType = "Unknown";
 	private int buildYear = 0;
 	
-
+	/**
+	 * @methodtype constructor
+	 */
 	public GuitarPhoto() {
 		super();
 	}
 
+	/**
+	 * @methodtype constructor
+	 */
 	public GuitarPhoto(PhotoId myId) {
 		super(myId);
 	}
 	
+	/**
+	 * @methodtype constructor
+	 */
 	public GuitarPhoto(PhotoId myId, String manufacturer, int year) {
 		super(myId);
 		this.manufacturer = manufacturer;
@@ -29,42 +37,42 @@ public class GuitarPhoto extends Photo {
 	
 	
 	/**
-	 * @return the manufacturer
+	 * @methodtype get
 	 */
 	public String getManufacturer() {
 		return manufacturer;
 	}
 
 	/**
-	 * @param manufacturer the manufacturer to set
+	 * @methodtype set
 	 */
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
 	/**
-	 * @return the year
+	 * @methodtype get
 	 */
 	public int getYear() {
 		return buildYear;
 	}
 
 	/**
-	 * @param year the year to set
+	 * @methodtype set
 	 */
 	public void setYear(int year) {
 		this.buildYear = year;
 	}
 
 	/**
-	 * @return the guitarType
+	 * @methodtype get
 	 */
 	public String getGuitarType() {
 		return guitarType;
 	}
 
 	/**
-	 * @param guitarType the guitarType to set
+	 * @methodtype set
 	 */
 	public void setGuitarType(String guitarType) {
 		this.guitarType = guitarType;
