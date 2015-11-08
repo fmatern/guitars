@@ -121,7 +121,7 @@ public class SphericCoordinate implements Coordinate{
 			coordSpheric = (SphericCoordinate) coord;
 		}
 		
-		/* convert to cartesian */
+		/* convert to cartesian (implemented here to be independent of cartesian class*/
 		double xthis = this.radius*Math.sin(this.latitude)*Math.cos(this.longitude);
 		double ythis = this.radius*Math.sin(this.latitude)*Math.sin(this.longitude);
 		double zthis = this.radius*Math.cos(this.latitude);

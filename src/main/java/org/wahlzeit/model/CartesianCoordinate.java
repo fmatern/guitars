@@ -66,19 +66,11 @@ public class CartesianCoordinate implements Coordinate{
 	public void setZ(double z) {
 		this.z = z;
 	}
+
 	
 	/**
-	 * @methodtype 
-	 */
-	public double getHaversineDistance(Coordinate coord){
-		
-		//TODO transform to spheric call function, return
-		
-		return 0.0;
-	}
-
-	/**
-	 * @methodtype 
+	 *  returns shortest distance between two coordinates in kilometer
+	 *  euclidean distance
 	 */
 	public double getDistance(Coordinate coord){
 		
