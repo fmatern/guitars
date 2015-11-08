@@ -3,7 +3,7 @@ package org.wahlzeit.model;
 public class Location {
 
 	private String name = "";
-	private Coordinate coordinate = null;
+	private SphericCoordinate coordinate = null;
 	
 	
 	/**
@@ -11,13 +11,13 @@ public class Location {
 	 */
 	public Location() {
 		this.name = "name unknown";
-		this.coordinate = new Coordinate();
+		this.coordinate = new SphericCoordinate();
 	}
 	
 	/**
 	 * @methodtype constructor
 	 */
-	public Location(String name, Coordinate coord) {
+	public Location(String name, SphericCoordinate coord) {
 		
 		assertArgumentNotNull(coord);
 		this.name = name;
@@ -29,7 +29,7 @@ public class Location {
 	 */
 	public Location(String name, double lat, double lon) {
 		this.name = name;
-		this.coordinate = new Coordinate(lat,lon);
+		this.coordinate = new SphericCoordinate(lat,lon);
 	}
 
 	/**
@@ -49,14 +49,14 @@ public class Location {
 	/**
 	 * @methodtype get
 	 */
-	public Coordinate getCoordinate() {
+	public SphericCoordinate getCoordinate() {
 		return coordinate;
 	}
 
 	/**
 	 * @methodtype set
 	 */
-	public void setCoordinate(Coordinate locationCoord) {
+	public void setCoordinate(SphericCoordinate locationCoord) {
 		
 		assertArgumentNotNull(locationCoord);
 		this.coordinate = locationCoord;
@@ -65,7 +65,7 @@ public class Location {
 	/**
 	 * @methodtype assertion
 	 */
-	private void assertArgumentNotNull(Coordinate coord) throws IllegalArgumentException {
+	private void assertArgumentNotNull(SphericCoordinate coord) throws IllegalArgumentException {
 		if( coord == null ){
 	        throw new IllegalArgumentException("Argument was null");
 		}

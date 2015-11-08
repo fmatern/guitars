@@ -43,7 +43,7 @@ public class LocationTest {
 	public void testConstructor(){
 		assertNotNull(locDefault);
 
-	    Coordinate coord = new Coordinate();
+	    SphericCoordinate coord = new SphericCoordinate();
 		//check properties after creation with default constructor
 		assertEquals("name unknown", locDefault.getName());
 		assertTrue(coord.equals(locDefault.getCoordinate()));
@@ -58,7 +58,7 @@ public class LocationTest {
 	/* test null pointer */
 	@Test (expected = IllegalArgumentException.class)
 	public void nullArgumentShouldThrowExeption1(){
-		Coordinate testNull = null;
+		SphericCoordinate testNull = null;
 		
 		Location testLoc = new Location("Test", testNull);
 		

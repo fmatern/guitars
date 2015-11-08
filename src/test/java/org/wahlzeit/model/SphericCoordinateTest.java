@@ -12,12 +12,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * test cases of the class Coordinate
  */
-public class CoordinateTest {
+public class SphericCoordinateTest {
 
 	
-	private Coordinate coordinateDefault;
-	private Coordinate coordinate1;
-	private Coordinate coordinate2;
+	private SphericCoordinate coordinateDefault;
+	private SphericCoordinate coordinate1;
+	private SphericCoordinate coordinate2;
 	
 	private final static double MAXDELTA = 0.0001;
 	
@@ -30,9 +30,9 @@ public class CoordinateTest {
 	
 	@Before
 	public void initCoordinates(){
-		coordinateDefault = new Coordinate();
-		coordinate1 = new Coordinate(lat1, long1);
-		coordinate2 = new Coordinate(lat2, long2);
+		coordinateDefault = new SphericCoordinate();
+		coordinate1 = new SphericCoordinate(lat1, long1);
+		coordinate2 = new SphericCoordinate(lat2, long2);
 	}
 	
 	/* test methods, calculations */
@@ -61,14 +61,14 @@ public class CoordinateTest {
 	@Test
 	public void testGetDistanceFunction(){
 		
-		double distance1 = coordinate1.getDistance(coordinate2);
-		double distance2 = coordinate2.getDistance(coordinate1);
+		double distance1 = coordinate1.getHaversineDistance(coordinate2);
+		double distance2 = coordinate2.getHaversineDistance(coordinate1);
 		
 		assertEquals(distance1, distance2, MAXDELTA);			
 		assertEquals( 16919.28935 , distance1, MAXDELTA);
 		
-		Coordinate testCoord = new Coordinate(-55.56, 175.15);
-		distance2 = testCoord.getDistance(coordinate2);
+		SphericCoordinate testCoord = new SphericCoordinate(-55.56, 175.15);
+		distance2 = testCoord.getHaversineDistance(coordinate2);
 		
 		assertEquals( 13235.88297, distance2, MAXDELTA );
 
@@ -77,10 +77,10 @@ public class CoordinateTest {
 	@Test
 	public void testEqualsFunction(){
 		
-		Coordinate equalCoord = new Coordinate(lat1, long1);
+		SphericCoordinate equalCoord = new SphericCoordinate(lat1, long1);
 		
-		assertFalse(coordinate1.equals(coordinate2));			
-		assertTrue( equalCoord.equals(coordinate1));
+		assertFalse(coordinate1.isEqual(coordinate2));			
+		assertTrue( equalCoord.isEqual(coordinate1));
 
 
 	}
@@ -88,7 +88,7 @@ public class CoordinateTest {
 	/* test null pointer */
 	@Test (expected = IllegalArgumentException.class)
 	public void nullArgumentShouldThrowExeption1(){
-		Coordinate testNull = null;
+		SphericCoordinate testNull = null;
 		coordinateDefault.getLatitudialDistance(testNull);	
 		coordinateDefault.getLongitudialDistance(testNull);	
 	}
