@@ -46,7 +46,7 @@ public class LocationTest {
 	    SphericCoordinate coord = new SphericCoordinate();
 		//check properties after creation with default constructor
 		assertEquals("name unknown", locDefault.getName());
-		assertTrue(coord.equals(locDefault.getCoordinate()));
+		assertTrue(coord.isEqual(locDefault.getCoordinate()));
 		
 		//check properties after creation with values
 		assertEquals("Not so nice Location", loc2.getName());

@@ -4,7 +4,7 @@ package org.wahlzeit.model;
 /**
  * A coordinate represents the location a photo was taken
  */
-public class SphericCoordinate implements Coordinate{
+public class SphericCoordinate extends AbstractCoordinate{
 	
 	private double latitude;
 	private double longitude;
@@ -89,6 +89,27 @@ public class SphericCoordinate implements Coordinate{
 		assertRadiusRange(d);
 		this.radius = d;	
 	}
+	
+	/**
+	 * @methodtype get, conversion
+	 */
+	public double getX(){
+		return this.getRadius()*Math.sin(this.getLatitude())*Math.cos(this.getLongitude());
+	}
+	
+	/**
+	 * @methodtype get, conversion
+	 */
+	public double getY(){
+		return this.getRadius()*Math.sin(this.getLatitude())*Math.sin(this.getLongitude());
+	}
+	
+	/**
+	 * @methodtype get, conversion
+	 */
+	public double getZ(){
+		return this.getRadius()*Math.cos(this.getLatitude());
+	}
 
 	/** 
 	 * returns difference in latitude 
@@ -106,55 +127,14 @@ public class SphericCoordinate implements Coordinate{
 		return Math.abs( this.longitude - coord.getLongitude() );		
 	}
 	
+	
 	/**
-	 *  returns shortest distance between two coordinates in kilometer
-	 *  euclidean distance
-	 */
-	public double getDistance(Coordinate coord){
-		
-		assertArgumentNotNull(coord);
-		
-		SphericCoordinate coordSpheric;
-		if( coord instanceof CartesianCoordinate) {
-			return coord.getDistance(this);
-		}else{
-			coordSpheric = (SphericCoordinate) coord;
-		}
-		
-		/* convert to cartesian (implemented here to be independent of cartesian class*/
-		double xthis = this.radius*Math.sin(this.latitude)*Math.cos(this.longitude);
-		double ythis = this.radius*Math.sin(this.latitude)*Math.sin(this.longitude);
-		double zthis = this.radius*Math.cos(this.latitude);
-		
-		double xother = coordSpheric.getRadius()*Math.sin(coordSpheric.getLatitude())*Math.cos(coordSpheric.getLongitude());
-		double yother = coordSpheric.getRadius()*Math.sin(coordSpheric.getLatitude())*Math.sin(coordSpheric.getLongitude());
-		double zother = coordSpheric.getRadius()*Math.cos(coordSpheric.getLatitude());
-		
-		/*calc euclidean distance*/
-		double xDiff = (xother - xthis)*(xother - xthis);
-		double yDiff = (yother - ythis)*(yother - ythis);
-		double zDiff = (zother - zthis)*(zother - zthis);
-		
-		double distance = Math.sqrt(xDiff+yDiff+zDiff);
-
-		return distance;
-		
-	}
-
-	/**
-	 *  returns distance between two coordinates in kilometer
+	 *  returns distance between two coordinates in kilometer, always assumes earth radius
 	 *  using Haversine formula  https://en.wikipedia.org/wiki/Haversine_formula
 	 */
-	public double getHaversineDistance(Coordinate coord){
+	public double getHaversineDistance(SphericCoordinate coordSpheric){
 		
-		assertArgumentNotNull(coord);
-		
-		SphericCoordinate coordSpheric;
-		if( coord instanceof CartesianCoordinate) {
-			coordSpheric = asSpheric((CartesianCoordinate)coord);
-		}else{
-			coordSpheric = (SphericCoordinate) coord;
-		}
+		assertArgumentNotNull(coordSpheric);
 
 	    double latDiffRadian = Math.toRadians(getLatitudialDistance(coordSpheric));
 	    double lonDiffRadian = Math.toRadians(getLongitudialDistance(coordSpheric));
@@ -165,23 +145,7 @@ public class SphericCoordinate implements Coordinate{
 	    return Math.abs(d);
 		
 	}
-	
-	/**
-	 * @methodtype conversion
-	 */
-	public SphericCoordinate asSpheric(CartesianCoordinate coord){
-		
-		SphericCoordinate sphericCoord = new SphericCoordinate();
-		
-		double radius = Math.sqrt((coord.getX()*coord.getX())+(coord.getY()*coord.getY())+(coord.getZ()*coord.getZ()));
-		
-		sphericCoord.setLatitude(Math.acos(coord.getZ() / radius));
-		sphericCoord.setLongitude(Math.atan(coord.getY()/coord.getX()));
-		sphericCoord.setRadius(radius);
-		
-		return sphericCoord;
-	}
-	
+
 	/**
 	 * @methodtype assertion
 	 */
@@ -203,42 +167,12 @@ public class SphericCoordinate implements Coordinate{
 	/**
 	 * @methodtype assertion
 	 */
-	private void assertArgumentNotNull(Coordinate coord) throws IllegalArgumentException {
-		if( coord == null ){
-	        throw new IllegalArgumentException("Argument was null");
-		}
-	}
-	
-	/**
-	 * @methodtype assertion
-	 */
 	private void assertRadiusRange(double d) throws IllegalArgumentException {
 		if( d <= 0.0){
 			throw new IllegalArgumentException("Radius must be larger than 0");
 		}
 	}
 
-	/**
-	 * @methodtype boolean query method
-	 */
-	@Override
-	public boolean isEqual(Coordinate coord) {
-		if (this == coord)
-			return true;
-		if (coord == null)
-			return false;
-		if (!(coord instanceof SphericCoordinate))
-			return false;
-		SphericCoordinate other = (SphericCoordinate) coord;
-		if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-			return false;
-		if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-			return false;
-		if (Double.doubleToLongBits(radius) != Double.doubleToLongBits(other.radius))
-			return false;
-		return true;
-	}
-	
 	/**
 	 * @methodtype comparison
 	 */
