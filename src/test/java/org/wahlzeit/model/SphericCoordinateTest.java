@@ -61,17 +61,21 @@ public class SphericCoordinateTest {
 	@Test
 	public void testGetDistanceFunction(){
 		
+		//haversine
 		double distance1 = coordinate1.getHaversineDistance(coordinate2);
 		double distance2 = coordinate2.getHaversineDistance(coordinate1);
 		
 		assertEquals(distance1, distance2, MAXDELTA);			
 		assertEquals( 16919.28935 , distance1, MAXDELTA);
 		
-		SphericCoordinate testCoord = new SphericCoordinate(-55.56, 175.15);
-		distance2 = testCoord.getHaversineDistance(coordinate2);
 		
-		assertEquals( 13235.88297, distance2, MAXDELTA );
-
+		//euclidean
+		CartesianCoordinate cartCoord = new CartesianCoordinate(-80.2, 100.0, 15.0);
+		
+		distance1 = cartCoord.getDistance(coordinate2);
+		distance2 = coordinate2.getDistance(cartCoord);
+		
+		assertEquals(distance1, distance2, MAXDELTA);
 	}
 
 	@Test

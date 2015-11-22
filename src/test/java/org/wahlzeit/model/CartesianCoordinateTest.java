@@ -64,7 +64,6 @@ public class CartesianCoordinateTest {
 		assertEquals(distance1, distance2, MAXDELTA);			
 		assertEquals( 51.7204 , distance1, MAXDELTA);
 		
-		//x 90, y 70, z 80 to sphere
 		SphericCoordinate testCoord = new SphericCoordinate(0, 0, 100);
 		distance2 = coordinate1.getDistance(testCoord);
 		

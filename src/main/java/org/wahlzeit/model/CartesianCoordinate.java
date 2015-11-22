@@ -20,9 +20,18 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype constructor
 	 */
 	public CartesianCoordinate(double x, double y, double z) {
+		
+		//pre-condition
+		assertNotNaN(x);
+		assertNotNaN(y);
+		assertNotNaN(z);
+		
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		
+		//class-invariants
+		assertClassInvariants();
 	}
 	
 	/**
@@ -36,6 +45,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype set
 	 */
 	public void setX(double x) {
+		//pre-condition
+		assertNotNaN(x);
 		this.x = x;
 	}
 
@@ -50,6 +61,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype set
 	 */
 	public void setY(double y) {
+		//pre-condition
+		assertNotNaN(y);
 		this.y = y;
 	}
 
@@ -64,6 +77,8 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 * @methodtype set
 	 */
 	public void setZ(double z) {
+		//pre-condition
+		assertNotNaN(z);
 		this.z = z;
 	}
 	
@@ -83,5 +98,15 @@ public class CartesianCoordinate extends AbstractCoordinate{
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
+	
+	/**
+	 * @methodtype assertion
+	*/
+	protected void assertNotNaN(double d) throws IllegalArgumentException {
+		if (Double.isNaN(d)) {
+			throw new IllegalArgumentException("Argument was NaN!");
+		}
+	}
+	
 
 }
