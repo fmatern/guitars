@@ -147,6 +147,9 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 */
 	public double getHaversineDistance(SphericCoordinate coordSpheric){
 		
+		//class-invariants
+		assertClassInvariants();
+		
 		//pre-condition
 		assertArgumentNotNull(coordSpheric);
 
@@ -170,7 +173,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 * @methodtype assertion
 	 */
 	private void assertLatitudeRange(double d) throws IllegalArgumentException {
-		if( d > 90.0 || d < -90.0){
+		if( d > 90.0 || d < -90.0 || Double.isNaN(d)){
 	        throw new IllegalArgumentException("Latitude must be between -90 and 90");
 		}
 	}
@@ -179,7 +182,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 * @methodtype assertion
 	 */
 	private void assertLongitudeRange(double d) throws IllegalArgumentException {
-		if( d > 180.0 || d < -180.0){
+		if( d > 180.0 || d < -180.0 || Double.isNaN(d)){
 	        throw new IllegalArgumentException("Longitude must be between -180 and 180");
 		}
 	}
@@ -188,7 +191,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 * @methodtype assertion
 	 */
 	private void assertRadiusRange(double d) throws IllegalArgumentException {
-		if( d <= 0.0){
+		if( d <= 0.0 || Double.isNaN(d)){
 			throw new IllegalArgumentException("Radius must be larger than 0");
 		}
 	}
