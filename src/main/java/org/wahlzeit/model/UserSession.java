@@ -23,6 +23,7 @@ package org.wahlzeit.model;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.services.Session;
 import org.wahlzeit.utils.HtmlUtil;
+import org.wahlzeit.utils.Pattern;
 
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
@@ -37,6 +38,16 @@ import java.util.logging.Logger;
  *
  * {@link HttpSession}s are managed automatically by Google App Engine.
  */
+
+@Pattern(
+		name = "Adapter",
+		participants = {
+		     "Client", /* Wahlzeit */
+			 "Adaptee", /* HttpSession */
+			 "Adapter", /* UserSession */
+		}
+)
+
 public class UserSession extends Session implements Serializable {
 
 	/**

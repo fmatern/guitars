@@ -24,6 +24,7 @@ import org.wahlzeit.services.Configuration;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
 import org.wahlzeit.utils.EnumValue;
+import org.wahlzeit.utils.Pattern;
 
 import java.io.Serializable;
 
@@ -31,6 +32,13 @@ import java.io.Serializable;
 /**
  * A configuration that provide easy access to Wahlzeit model configuration data.
  */
+@Pattern(
+		name = "Strategy",
+		participants = {
+		     "StrategyBase", /* ModelConfig */
+		     "ConcreteStrategy", /* GermanModelConfig,EnglishModelConfig */
+		}
+)
 public interface ModelConfig extends Configuration, Serializable {
 
 	// Meta stuff

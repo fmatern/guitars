@@ -23,10 +23,18 @@ package org.wahlzeit.main;
 import org.wahlzeit.services.SessionManager;
 import org.wahlzeit.services.SysConfig;
 import org.wahlzeit.services.SysSession;
+import org.wahlzeit.utils.Pattern;
 
 /**
  * A superclass for a Main class for system startup and shutdown.
  */
+@Pattern(
+		name = "Strategy",
+		participants = {
+		     "StrategyBase", /* AbstractMain */
+		     "ConcreteStrategy", /* ModelMain, ScriptMain, ServiceMain */
+		}
+)
 public abstract class AbstractMain {
 
 	/**

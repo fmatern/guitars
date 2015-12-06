@@ -32,6 +32,7 @@ import org.wahlzeit.services.Language;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.SysConfig;
 import org.wahlzeit.utils.EnumValue;
+import org.wahlzeit.utils.Pattern;
 
 import java.io.File;
 import java.io.IOException;
