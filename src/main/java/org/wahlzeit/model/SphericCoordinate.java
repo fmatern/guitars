@@ -217,13 +217,14 @@ public class SphericCoordinate extends AbstractCoordinate{
 		
 	}
 
+
 	/**
 	 * @methodtype comparison
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = super.hashCode();
+		int result = 1;
 		long temp;
 		temp = Double.doubleToLongBits(latitude);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
