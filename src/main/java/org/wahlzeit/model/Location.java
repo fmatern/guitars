@@ -1,9 +1,12 @@
 package org.wahlzeit.model;
 
+import com.googlecode.objectify.annotation.Container;
+
 public class Location {
 
 	private String name = "";
-	private SphericCoordinate coordinate = null;
+	@Container
+	private Coordinate coordinate = null;
 	
 	
 	/**
@@ -11,7 +14,7 @@ public class Location {
 	 */
 	public Location() {
 		this.name = "name unknown";
-		this.coordinate = new SphericCoordinate();
+		this.coordinate = SphericCoordinate.getInstance();
 	}
 	
 	/**
@@ -29,7 +32,7 @@ public class Location {
 	 */
 	public Location(String name, double lat, double lon) {
 		this.name = name;
-		this.coordinate = new SphericCoordinate(lat,lon);
+		this.coordinate = SphericCoordinate.getInstance(lat,lon);
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class Location {
 	/**
 	 * @methodtype get
 	 */
-	public SphericCoordinate getCoordinate() {
+	public Coordinate getCoordinate() {
 		return coordinate;
 	}
 

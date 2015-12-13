@@ -19,7 +19,7 @@ public class LocationTest {
 	private Location loc1;
 	private Location loc2;
 	
-	private final static double MAXDELTA = 0.0001;
+	private final static double MAXDELTA = 0.001;
 	
 	private double lat1  = -80.2;  /*breitengrad*/
 	private double long1 = 100.0;  /*laengengrad*/ 
@@ -43,14 +43,14 @@ public class LocationTest {
 	public void testConstructor(){
 		assertNotNull(locDefault);
 
-	    SphericCoordinate coord = new SphericCoordinate();
+	    SphericCoordinate coord = SphericCoordinate.getInstance();
 		//check properties after creation with default constructor
 		assertEquals("name unknown", locDefault.getName());
 		assertTrue(coord.isEqual(locDefault.getCoordinate()));
 		
 		//check properties after creation with values
 		assertEquals("Not so nice Location", loc2.getName());
-		assertEquals(lat1, loc1.getCoordinate().getLatitude(), MAXDELTA);
+		assertEquals(1090.169, loc1.getCoordinate().getX(), MAXDELTA);
 		
 	}
 

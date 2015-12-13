@@ -2,15 +2,15 @@ package org.wahlzeit.model;
 
 public class CartesianCoordinate extends AbstractCoordinate{
 
-	private double x;
-	private double y;
-	private double z;
+	private final double x;
+	private final double y;
+	private final double z;
 	
 	
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate() {
+	private CartesianCoordinate() {
 		this.x = 0.0;
 		this.y = 0.0;
 		this.z = 0.0;
@@ -19,7 +19,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	/**
 	 * @methodtype constructor
 	 */
-	public CartesianCoordinate(double x, double y, double z) {
+	private CartesianCoordinate(double x, double y, double z) {
 		
 		//pre-condition
 		assertNotNaN(x);
@@ -35,19 +35,37 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	}
 	
 	/**
+	 * @methodtype convenience
+	 */
+	public static CartesianCoordinate getInstance(){
+		return getInstance(0.0,0.0,0.0);
+	}
+	/**
+	 * @methodtype factory method
+	 */
+	public static CartesianCoordinate getInstance(double x, double y, double z){
+		CartesianCoordinate wantedCoord = new CartesianCoordinate(x, y, z);
+		int hashCode = wantedCoord.hashCode();
+		AbstractCoordinate result = instances.get(hashCode);
+		
+		if (result == null) {
+			synchronized (instances) {
+				result = instances.get(hashCode);
+				if (result == null) {
+					result = wantedCoord;
+					instances.put(hashCode, result);
+				}
+			}
+		}
+		
+		return (CartesianCoordinate)result;
+	}
+	
+	/**
 	 * @methodtype get
 	 */
 	public double getX() {
 		return x;
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setX(double x) {
-		//pre-condition
-		assertNotNaN(x);
-		this.x = x;
 	}
 
 	/**
@@ -58,28 +76,10 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	}
 
 	/**
-	 * @methodtype set
-	 */
-	public void setY(double y) {
-		//pre-condition
-		assertNotNaN(y);
-		this.y = y;
-	}
-
-	/**
 	 * @methodtype get
 	 */
 	public double getZ() {
 		return z;
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setZ(double z) {
-		//pre-condition
-		assertNotNaN(z);
-		this.z = z;
 	}
 	
 	/**
@@ -87,16 +87,7 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(x);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(y);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(z);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return super.hashCode();
 	}
 	
 	/**

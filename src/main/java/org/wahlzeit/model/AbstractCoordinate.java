@@ -1,8 +1,15 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.wahlzeit.services.EmailAddress;
+
 public abstract class AbstractCoordinate implements Coordinate {
 	
 	public static double DELTA = 0.001;
+	
+	protected static final Map<Integer, AbstractCoordinate> instances = new HashMap<Integer, AbstractCoordinate>();
 
 	/**
 	 *  returns shortest distance between two coordinates in kilometer
@@ -45,6 +52,30 @@ public abstract class AbstractCoordinate implements Coordinate {
 	}
 	
 	/**
+	 * @methodtype comparison
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(getX());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(getY());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(getZ());
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
+	}
+	
+	/**
+	 * @methodtype boolean query
+	*/
+	public boolean equals(Coordinate coord) {
+		return isEqual(coord);
+	}
+	
+	/**
 	 * @methodtype assertion
 	*/
 	protected void assertArgumentNotNull(Coordinate coord) throws IllegalArgumentException {
@@ -61,5 +92,7 @@ public abstract class AbstractCoordinate implements Coordinate {
 			throw new IllegalStateException("Illegal class invariant: An Attribute is NaN!");
 		}
 	}
+	
+	
 	
 }

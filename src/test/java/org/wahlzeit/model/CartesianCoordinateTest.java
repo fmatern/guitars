@@ -32,9 +32,9 @@ public class CartesianCoordinateTest {
 	
 	@Before
 	public void initCoordinates(){
-		coordinateDefault = new CartesianCoordinate();
-		coordinate1 = new CartesianCoordinate(x1, y1, z1);
-		coordinate2 = new CartesianCoordinate(x2, y2, z2);
+		coordinateDefault = CartesianCoordinate.getInstance();
+		coordinate1 = CartesianCoordinate.getInstance(x1,y1,z1);
+		coordinate2 = CartesianCoordinate.getInstance(x2,y2,z2);
 	}
 	
 	/* test methods, calculations */
@@ -64,7 +64,7 @@ public class CartesianCoordinateTest {
 		assertEquals(distance1, distance2, MAXDELTA);			
 		assertEquals( 51.7204 , distance1, MAXDELTA);
 		
-		SphericCoordinate testCoord = new SphericCoordinate(0, 0, 100);
+		SphericCoordinate testCoord = SphericCoordinate.getInstance(0, 0, 100);
 		distance2 = coordinate1.getDistance(testCoord);
 		
 		assertEquals( 153.808 , distance2, 0.1 );
@@ -73,7 +73,7 @@ public class CartesianCoordinateTest {
 	@Test
 	public void testEqualsFunction(){
 		
-		CartesianCoordinate equalCoord = new CartesianCoordinate(x1,y1,z1);
+		CartesianCoordinate equalCoord = CartesianCoordinate.getInstance(x1,y1,z1);
 		
 		assertFalse(coordinate1.isEqual(coordinate2));			
 		assertTrue( equalCoord.isEqual(coordinate1));

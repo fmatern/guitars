@@ -6,15 +6,15 @@ package org.wahlzeit.model;
  */
 public class SphericCoordinate extends AbstractCoordinate{
 	
-	private double latitude;
-	private double longitude;
-	private double radius;
+	private final double latitude;
+	private final double longitude;
+	private final double radius;
 	private final static double EARTHRADIUS = 6371; /*Earth radius in km*/
 
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude) {
+	private SphericCoordinate(double latitude, double longitude) {
 				
 		//pre-condition
 		assertLatitudeRange(latitude);
@@ -31,11 +31,12 @@ public class SphericCoordinate extends AbstractCoordinate{
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate(double latitude, double longitude, double radius) {
+	private SphericCoordinate(double latitude, double longitude, double radius) {
 			
 		//pre-condition
 		assertLatitudeRange(latitude);
 		assertLongitudeRange(longitude);
+		assertRadiusRange(radius);
 		
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -48,9 +49,43 @@ public class SphericCoordinate extends AbstractCoordinate{
 	/**
 	 * @methodtype constructor
 	 */
-	public SphericCoordinate() {
+	private SphericCoordinate() {
 		this.latitude = 0.0;
 		this.longitude = 0.0;
+		this.radius = 0.0;
+	}
+	
+	/**
+	 * @methodtype convenience
+	 */
+	public static SphericCoordinate getInstance(){
+		return getInstance(0.0,0.0,EARTHRADIUS);
+	}
+	/**
+	 * @methodtype convenience
+	 */
+	public static SphericCoordinate getInstance(double latitude, double longitude){
+		return getInstance(latitude,longitude,EARTHRADIUS);
+	}
+	/**
+	 * @methodtype factory method
+	 */
+	public static SphericCoordinate getInstance(double latitude, double longitude, double radius){
+		SphericCoordinate wantedCoord = new SphericCoordinate(latitude, longitude, radius);
+		int hashCode = wantedCoord.hashCode();
+		AbstractCoordinate result = instances.get(hashCode);
+		
+		if (result == null) {
+			synchronized (instances) {
+				result = instances.get(hashCode);
+				if (result == null) {
+					result = wantedCoord;
+					instances.put(hashCode, result);
+				}
+			}
+		}
+		
+		return (SphericCoordinate)result;
 	}
 
 	/**
@@ -68,37 +103,10 @@ public class SphericCoordinate extends AbstractCoordinate{
 	}
 
 	/**
-	 * @methodtype set
-	 */
-	public void setLatitude(double d) {
-		//pre-condition
-		assertLatitudeRange(d);
-		this.latitude = d;	
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setLongitude(double d) { 
-		//pre-condition
-		assertLongitudeRange(d);
-		this.longitude = d;		
-	}
-	
-	/**
 	 * @methodtype get
 	 */
 	public double getRadius() {
 		return radius;
-	}
-
-	/**
-	 * @methodtype set
-	 */
-	public void setRadius(double d) {
-		//pre-condition
-		assertRadiusRange(d);
-		this.radius = d;	
 	}
 	
 	/**
@@ -214,16 +222,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(latitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitude);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(radius);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return super.hashCode();
 	}
 	
 }

@@ -30,9 +30,9 @@ public class SphericCoordinateTest {
 	
 	@Before
 	public void initCoordinates(){
-		coordinateDefault = new SphericCoordinate();
-		coordinate1 = new SphericCoordinate(lat1, long1);
-		coordinate2 = new SphericCoordinate(lat2, long2);
+		coordinateDefault = SphericCoordinate.getInstance();
+		coordinate1 = SphericCoordinate.getInstance(lat1, long1);
+		coordinate2 = SphericCoordinate.getInstance(lat2, long2);
 	}
 	
 	/* test methods, calculations */
@@ -70,7 +70,7 @@ public class SphericCoordinateTest {
 		
 		
 		//euclidean
-		CartesianCoordinate cartCoord = new CartesianCoordinate(-80.2, 100.0, 15.0);
+		CartesianCoordinate cartCoord = CartesianCoordinate.getInstance(-80.2, 100.0, 15.0);
 		
 		distance1 = cartCoord.getDistance(coordinate2);
 		distance2 = coordinate2.getDistance(cartCoord);
@@ -81,7 +81,7 @@ public class SphericCoordinateTest {
 	@Test
 	public void testEqualsFunction(){
 		
-		SphericCoordinate equalCoord = new SphericCoordinate(lat1, long1);
+		SphericCoordinate equalCoord = SphericCoordinate.getInstance(lat1, long1);
 		
 		assertFalse(coordinate1.isEqual(coordinate2));			
 		assertTrue( equalCoord.isEqual(coordinate1));
@@ -100,22 +100,22 @@ public class SphericCoordinateTest {
 	/* test value range */
 	@Test (expected = IllegalArgumentException.class)
 	public void latitudeOutOfRangeShouldThrowExeption1(){
-		coordinateDefault.setLatitude(-100.0);	
+		coordinateDefault = SphericCoordinate.getInstance(-100.0,0.0);	
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void latitudeOutOfRangeShouldThrowExeption2(){
-		coordinateDefault.setLatitude(100.0);	
+		coordinateDefault = SphericCoordinate.getInstance(+100.0,0.0);		
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void longitudeOutOfRangeShouldThrowExeption1(){	
-		coordinateDefault.setLongitude(-200.0);	
+		coordinateDefault = SphericCoordinate.getInstance(0.0,-200.0);	
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void longitudeOutOfRangeShouldThrowExeption2(){		
-		coordinateDefault.setLongitude(200.0);		
+		coordinateDefault = SphericCoordinate.getInstance(0.0, 200.0);	
 	}
 	
 }
