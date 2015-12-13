@@ -87,7 +87,16 @@ public class CartesianCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		final int prime = 31;
+		int result = super.hashCode();
+		long temp;
+		temp = Double.doubleToLongBits(x);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(y);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(z);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
 	}
 	
 	/**
@@ -98,6 +107,5 @@ public class CartesianCoordinate extends AbstractCoordinate{
 			throw new IllegalArgumentException("Argument was NaN!");
 		}
 	}
-	
 
 }

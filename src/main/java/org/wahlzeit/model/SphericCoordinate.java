@@ -75,7 +75,7 @@ public class SphericCoordinate extends AbstractCoordinate{
 		int hashCode = wantedCoord.hashCode();
 		AbstractCoordinate result = instances.get(hashCode);
 		
-		if (result == null) {
+		if (result == null ) {
 			synchronized (instances) {
 				result = instances.get(hashCode);
 				if (result == null) {
@@ -222,7 +222,19 @@ public class SphericCoordinate extends AbstractCoordinate{
 	 */
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		final int prime = 31;
+		int result = super.hashCode();
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(radius);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		return result;
 	}
+
+
+	
 	
 }

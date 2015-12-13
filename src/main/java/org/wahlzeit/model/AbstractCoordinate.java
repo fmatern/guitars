@@ -3,7 +3,6 @@ package org.wahlzeit.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.wahlzeit.services.EmailAddress;
 
 public abstract class AbstractCoordinate implements Coordinate {
 	
@@ -49,23 +48,6 @@ public abstract class AbstractCoordinate implements Coordinate {
 			return true;
 		else
 			return false;
-	}
-	
-	/**
-	 * @methodtype comparison
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(getX());
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(getY());
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(getZ());
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
 	}
 	
 	/**
