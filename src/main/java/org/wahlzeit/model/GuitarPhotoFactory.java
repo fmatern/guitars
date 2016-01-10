@@ -59,8 +59,8 @@ public class GuitarPhotoFactory extends PhotoFactory {
 	/**
 	 * Creates a new photo with the specified id
 	 */
-	public Photo createPhoto(PhotoId id, String manufacturer, int year) {
-		return new GuitarPhoto(id, manufacturer, year);
+	public Photo createPhoto(PhotoId id, Guitar guitar) {
+		return new GuitarPhoto(id, guitar);
 	}
 	
 
