@@ -1,15 +1,9 @@
 package org.wahlzeit.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 public abstract class AbstractCoordinate implements Coordinate {
 	
 	public static double DELTA = 0.001;
 	
-	protected static final Map<Integer, AbstractCoordinate> instances = new HashMap<Integer, AbstractCoordinate>();
-
 	/**
 	 *  returns shortest distance between two coordinates in kilometer
 	 *  euclidean distance

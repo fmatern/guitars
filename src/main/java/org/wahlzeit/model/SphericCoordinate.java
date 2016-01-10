@@ -1,5 +1,7 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A coordinate represents the location a photo was taken
@@ -10,6 +12,8 @@ public class SphericCoordinate extends AbstractCoordinate{
 	private final double longitude;
 	private final double radius;
 	private final static double EARTHRADIUS = 6371; /*Earth radius in km*/
+	
+	protected static final Map<Integer, AbstractCoordinate> instances = new HashMap<Integer, AbstractCoordinate>();
 
 	/**
 	 * @methodtype constructor

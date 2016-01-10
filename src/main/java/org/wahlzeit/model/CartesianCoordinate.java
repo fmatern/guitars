@@ -1,12 +1,16 @@
 package org.wahlzeit.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CartesianCoordinate extends AbstractCoordinate{
 
 	private final double x;
 	private final double y;
 	private final double z;
 	
-	
+	protected static final Map<Integer, AbstractCoordinate> instances = new HashMap<Integer, AbstractCoordinate>();
+		
 	/**
 	 * @methodtype constructor
 	 */
